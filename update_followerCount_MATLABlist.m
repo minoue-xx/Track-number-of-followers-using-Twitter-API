@@ -17,6 +17,7 @@ accesstokensecret = getenv("ACCESSTOKENSECRET");
 
 % Create Twitter connection object
 c = twitter(consumerkey,consumersecret,accesstoken,accesstokensecret);
+disp("Twitter connection object created.");
 
 %%
 % List: MATLAB の中の人達（JP）
@@ -32,6 +33,7 @@ parameters.count = 200;
 % Retrieve Twitter data
 d = getdata(c,baseurl,parameters);
 
+disp("Member list retrived.");
 % Example: output is the vector of structures
 % d.Body.Data.users{1}
 %  id: 1.4982e+18
@@ -73,8 +75,8 @@ else
     writetimetable(tt,'followercount_history.csv');
 end
 
-disp("data is saved to followercount_history.csv");
+disp("Data is saved to followercount_history.csv");
 
 %% Update figure
 updatePlot
-disp("figure updated")
+disp("New figure file denerated.")
