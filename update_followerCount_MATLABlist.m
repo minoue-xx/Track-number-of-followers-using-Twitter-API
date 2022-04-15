@@ -72,7 +72,7 @@ else
     'ReadVariableNames',true, 'VariableNamingRule', 'preserve');
 
     tt = outerjoin(tt_old, timetable2table(tt),'MergeKeys',true);
-    writetimetable(tt,'followercount_history.csv');
+    writetable(tt,'followercount_history.csv');
 end
 
 disp("Data is saved to followercount_history.csv");
