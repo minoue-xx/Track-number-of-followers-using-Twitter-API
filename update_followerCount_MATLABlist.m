@@ -66,7 +66,7 @@ tt = table2timetable(followers_counts,"RowTimes",datetime);
 if ~exist('followercount_history.csv','file')
     writetimetable(tt,'followercount_history.csv');
 else
-    tt_old = readtable('followerscount_history.csv',...
+    tt_old = readtable('followercount_history.csv',...
     'ReadVariableNames',true, 'VariableNamingRule', 'preserve');
 
     tt = outerjoin(tt_old, timetable2table(tt),'MergeKeys',true);
