@@ -5,10 +5,10 @@
 % Replace with your own credentials.
 % Using setenv/getenv so that it can be used in GitHub Actions for automate
 % the process.
-setenv('CONSUMERKEY','xxxxxxxxxxxxxx');
-setenv('CONSUMERSECRET','xxxxxxxxxxxxxx');
-setenv('ACCESSTOKEN','xxxxxxxxxxxxxx');
-setenv('ACCESSTOKENSECRET','xxxxxxxxxxxxxx');
+% setenv('CONSUMERKEY','xxxxxxxxxxxxxx');
+% setenv('CONSUMERSECRET','xxxxxxxxxxxxxx');
+% setenv('ACCESSTOKEN','xxxxxxxxxxxxxx');
+% setenv('ACCESSTOKENSECRET','xxxxxxxxxxxxxx');
 
 consumerkey = getenv("CONSUMERKEY");
 consumersecret = getenv("CONSUMERSECRET");
@@ -58,7 +58,7 @@ end
 % put the data to a table
 data = table(id_str,screen_name,followers_count,friends_count);
 
-%% Append timestamp
+%% Append timestamp and save to csv
 followers_counts = array2table(followers_count', 'VariableNames', id_str');
 followers_counts.Properties.VariableDescriptions = screen_name';
 tt = table2timetable(followers_counts,"RowTimes",datetime);
@@ -72,3 +72,9 @@ else
     tt = outerjoin(tt_old, timetable2table(tt),'MergeKeys',true);
     writetimetable(tt,'followercount_history.csv');
 end
+
+disp("data is saved to followercount_history.csv");
+
+%% Update figure
+updatePlot
+disp("figure updated")
