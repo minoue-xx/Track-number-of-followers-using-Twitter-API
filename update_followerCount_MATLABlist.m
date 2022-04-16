@@ -77,6 +77,58 @@ end
 
 disp("Data is saved to followercount_history.csv");
 
+
+%% Retrieve Follower IDs
+disp("Start getting follower IDs of each members.");
+baseurl = 'https://api.twitter.com/1.1/followers/ids.json';
+clear parameters;
+parameters.stringify_ids = 'true';
+parameters.count = 5000; % max
+
+ids = [];
+for ii=1:length(d.Body.Data.users)
+    parameters.cursor =  -1;
+    parameters.screen_name = d.Body.Data.users{ii}.screen_name;
+    while any(parameters.cursor ==  -1) || (~isfield(d2.Body.Data, 'next_cursor') || d2.Body.Data.next_cursor ~= 0)
+
+        % Retrieve followr ids
+        d2 = getdata(c,baseurl, parameters);
+        if d2.StatusCode == "TooManyRequests"
+            disp("TooManyRequests: wait for 20 minutes for the next request.")
+
+            % wait for 20 minutes
+            for jj = 1:20
+                pause(60)
+                disp(jj + " mins...")
+            end
+            disp("20 mins passed!!")
+            d2 = getdata(c,baseurl, parameters);
+            disp(d2.StatusCode)
+        end
+        ids = [ids; d2.Body.Data.ids];
+        parameters.cursor = d2.Body.Data.next_cursor_str;
+        disp( ii + "/" + length(d.Body.Data.users) + " done...");
+    end
+end
+
+disp("Finished getting IDs");
+disp("length(ids) = " + length(ids));
+disp("length(unique(ids)) = " + length(unique(ids)));
+
+%% Append timestamp and save to csv
+t = table(length(ids), length(unique(ids)), 'VariableNames', ["total","unique"]);
+tt = table2timetable(t,"RowTimes",datetime);
+
+if ~exist('uniquefollowercount_history.csv','file')
+    writetimetable(tt,'uniquefollowercount_history.csv');
+else
+    tt_old = readtable('uniquefollowercount_history.csv',...
+    'ReadVariableNames',true, 'VariableNamingRule', 'preserve');
+
+    tt = outerjoin(tt_old, timetable2table(tt),'MergeKeys',true);
+    writetable(tt,'uniquefollowercount_history.csv');
+end
+
 %% Update figure
 updatePlot
 disp("New figure file denerated.")
