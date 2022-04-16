@@ -28,7 +28,7 @@ jobs:
           ACCESSTOKEN: ${{ secrets.ACCESSTOKEN }}
           ACCESSTOKENSECRET: ${{ secrets.ACCESSTOKENSECRET }}
         with:
-          command: update_uniquefollowerCount_MATLABlist
+          command: update_followerCount_MATLABlist
           
       - name: Push updated files
         env:
