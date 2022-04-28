@@ -4,6 +4,11 @@
 tt = readtable('uniquefollowercount_history.csv',...
     'ReadVariableNames',true, 'VariableNamingRule', 'preserve');
 
+% If the datetime string was not correctly parsed (due to locale setting)
+if iscell(tt.Time)
+    tt.Time = datetime(tt.Time,'Locale','en_US');
+end
+
 plot(tt.Time, tt.total,'-o')
 hold on
 plot(tt.Time, tt.unique,'-o')
