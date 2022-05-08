@@ -117,13 +117,6 @@ disp("length(ids) = " + length(ids));
 uniqueIDs = unique(ids);
 disp("length(unique(ids)) = " + length(uniqueIDs));
 
-try
-    writecell(uniqueIDs,'uniqueIDs.csv');
-catch ME
-    save('uniqueIDs.mat','uniqueIDs');
-end
-disp("Unique IDs is exported to uniqueIDs.csv");
-
 %% Append timestamp and save to csv
 t = table(length(ids), length(uniqueIDs), 'VariableNames', ["total","unique"]);
 tt = table2timetable(t,"RowTimes",datetime);
