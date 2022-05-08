@@ -120,7 +120,7 @@ disp("length(unique(ids)) = " + length(uniqueIDs));
 try
     writecell(uniqueIDs,'uniqueIDs.csv');
 catch ME
-    save('uniqueIDs.mat,'uniqueID');
+    save('uniqueIDs.mat','uniqueIDs');
 end
 disp("Unique IDs is exported to uniqueIDs.csv");
 
