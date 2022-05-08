@@ -113,10 +113,19 @@ end
 
 disp("Finished getting IDs");
 disp("length(ids) = " + length(ids));
-disp("length(unique(ids)) = " + length(unique(ids)));
+
+uniqueIDs = unique(ids);
+disp("length(unique(ids)) = " + length(uniqueIDs));
+
+try
+    writecell(uniqueIDs,'uniqueIDs.csv');
+catch ME
+    save('uniqueIDs.mat,'uniqueID');
+end
+disp("Unique IDs is exported to uniqueIDs.csv");
 
 %% Append timestamp and save to csv
-t = table(length(ids), length(unique(ids)), 'VariableNames', ["total","unique"]);
+t = table(length(ids), length(uniqueIDs), 'VariableNames', ["total","unique"]);
 tt = table2timetable(t,"RowTimes",datetime);
 
 if ~exist('uniquefollowercount_history.csv','file')
