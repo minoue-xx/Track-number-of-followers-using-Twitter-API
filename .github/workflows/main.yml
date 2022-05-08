@@ -10,7 +10,7 @@ name: Run MATLAB script on GitHub-Hosted Runner
 # |--------- minute
 on: 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 16 * * *'
 jobs:
   my-job:
     name: Run MATLAB script and Generate Artifacts
